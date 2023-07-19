@@ -3,7 +3,9 @@ package com.example.crud.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,5 +33,12 @@ public class ProductController {
         System.out.println(data);
         repository.save(newProduct);
         return ResponseEntity.ok("Produto adicionado");
+    }
+    @PutMapping
+    public ResponseEntity updateProduct(@RequestBody @Valid RequestProduct data){
+        Product product =  repository.getReferenceById(data.id());
+        product.setName(data.name());
+        product.setPrice_in_cents(data.price_in_cents());
+        return ResponseEntity.ok(product);
     }
 }
